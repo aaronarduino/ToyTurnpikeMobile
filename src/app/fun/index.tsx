@@ -96,7 +96,7 @@ export default function HomeScreen() {
           type="code"
           style={{
             alignSelf: "center",
-            paddingBottom: Spacing.six,
+            paddingBottom: Spacing.four,
             ...styles.code,
           }}
         >
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   },
   cards: {
     flexDirection: "column",
+    flexGrow: 1,
     gap: Spacing.three,
     padding: 0,
     margin: 0,
@@ -135,8 +136,8 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     paddingHorizontal: Spacing.four,
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
+    // gap: Spacing.three,
+    // paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
   },
   heroSection: {
