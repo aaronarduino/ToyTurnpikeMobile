@@ -51,6 +51,7 @@ export default function HomeScreen() {
       try {
         const response = await fetch(
           `${process.env.BACKEND_API_URL}/dashboard`,
+          `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/dashboard`,
           {
             headers,
             // 'include' can interfere with the cookies we just set manually in the headers
