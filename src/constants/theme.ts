@@ -76,6 +76,19 @@ export const Styles = StyleSheet.create({
     alignSelf: "stretch",
     paddingHorizontal: Spacing.three,
   },
+  cardTopHeader: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#c4c4d1",
+  },
+  cardTopHeaderText: {
+    alignSelf: "center",
+    paddingBottom: 16,
+  },
+  cardBottomHeader: {
+    borderTopWidth: 1,
+    borderTopColor: "#c4c4d1",
+    paddingTop: 16,
+  },
   stepContainer: {
     gap: Spacing.three,
     alignSelf: "stretch",
