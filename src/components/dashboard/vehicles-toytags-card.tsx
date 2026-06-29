@@ -14,11 +14,10 @@ import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import { formatter } from "@/constants/currency";
 
-export default function AccountInfo() {
+export default function VehiclesToytagsCard() {
   const [data, setData] = useState({
-    statement_balance: 0.0,
-    auto_pay_date: "",
-    current_account_balance: 0.0,
+    vehicles: 0,
+    toytags: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -35,7 +34,7 @@ export default function AccountInfo() {
 
       try {
         const response = await fetch(
-          `${process.env.BACKEND_API_URL}/dashboard/payments`,
+          `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/dashboard/vehicles_toytags`,
           {
             headers,
             // 'include' can interfere with the cookies we just set manually in the headers
@@ -59,27 +58,19 @@ export default function AccountInfo() {
     fetchAccountInfo();
   }, []);
 
+  if (error) {
+    return <ThemedText type="code">{error}</ThemedText>;
+  }
+
   return (
     <ThemedView type="backgroundElement" style={styles.stepContainer}>
       <HintRow
-        title="Statement Balance"
-        hint={
-          <ThemedText type="code">
-            {formatter.format(data.statement_balance)}
-          </ThemedText>
-        }
+        title="Vehicles"
+        hint={<ThemedText type="code">{data.vehicles}</ThemedText>}
       />
       <HintRow
-        title="Fresh start"
-        hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-      />
-      <HintRow
-        title="Current Account Balance"
-        hint={
-          <ThemedText type="code">
-            {formatter.format(data.current_account_balance)}
-          </ThemedText>
-        }
+        title="TOYTAGS"
+        hint={<ThemedText type="code">{data.toytags}</ThemedText>}
       />
     </ThemedView>
   );

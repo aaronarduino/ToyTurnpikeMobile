@@ -1,6 +1,6 @@
 import * as Device from "expo-device";
 import { authClient } from "@/lib/auth-client";
-import { Platform, StyleSheet, Text } from "react-native";
+import { Platform, ScrollView, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AnimatedIcon } from "@/components/animated-icon";
@@ -11,7 +11,11 @@ import { WebBadge } from "@/components/web-badge";
 import { useSession } from "@/ctx";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
 import { useEffect, useState } from "react";
-import AccountInfo from "@/components/dashboard/account-info";
+import PaymentsCard from "@/components/dashboard/payments-card";
+import AccountCard from "@/components/dashboard/account-card";
+import PaymentMethodsCard from "@/components/dashboard/payment-methods-card";
+import VehiclesToytagsCard from "@/components/dashboard/vehicles-toytags-card";
+import ActivityCard from "@/components/dashboard/activity-card";
 
 function getDevMenuHint() {
   if (Platform.OS === "web") {
@@ -50,7 +54,6 @@ export default function HomeScreen() {
 
       try {
         const response = await fetch(
-          `${process.env.BACKEND_API_URL}/dashboard`,
           `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/dashboard`,
           {
             headers,
@@ -91,32 +94,25 @@ export default function HomeScreen() {
 
         <ThemedText
           type="code"
-          style={{ paddingBottom: Spacing.six, ...styles.code }}
+          style={{
+            alignSelf: "center",
+            paddingBottom: Spacing.six,
+            ...styles.code,
+          }}
         >
           Account ID: {session?.user.id}
         </ThemedText>
 
-        <AccountInfo />
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Welcome:"
-            hint={<ThemedText type="code">{user.account.holder}</ThemedText>}
-          />
-          <HintRow
-            title="Account ID:"
-            hint={<ThemedText type="code">{user.account.id}</ThemedText>}
-          />
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <ScrollView
+          style={{ margin: 0, padding: 0 }}
+          contentContainerStyle={styles.cards}
+        >
+          <PaymentsCard />
+          <AccountCard />
+          <PaymentMethodsCard />
+          <VehiclesToytagsCard />
+          <ActivityCard />
+        </ScrollView>
 
         {Platform.OS === "web" && <WebBadge />}
       </SafeAreaView>
@@ -130,10 +126,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
   },
+  cards: {
+    flexDirection: "column",
+    gap: Spacing.three,
+    padding: 0,
+    margin: 0,
+  },
   safeArea: {
     flex: 1,
     paddingHorizontal: Spacing.four,
-    alignItems: "center",
     gap: Spacing.three,
     paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
