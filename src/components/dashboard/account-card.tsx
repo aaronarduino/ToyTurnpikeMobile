@@ -14,17 +14,8 @@ export default function AccountCard() {
 
   return (
     <ThemedView type="backgroundElement" style={Styles.card}>
-      <ThemedView
-        type="backgroundElement"
-        style={{ borderBottomWidth: 1, borderBottomColor: "#c4c4d1" }}
-      >
-        <ThemedText
-          type="default"
-          style={{
-            alignSelf: "center",
-            paddingBottom: 16,
-          }}
-        >
+      <ThemedView type="backgroundElement" style={Styles.cardTopHeader}>
+        <ThemedText type="smallTitle" style={Styles.cardTopHeaderText}>
           <User size={16} />
           &nbsp; Account ID {lastEightOf(session?.user.id as string)}
         </ThemedText>
@@ -37,10 +28,7 @@ export default function AccountCard() {
         />
       </ThemedView>
 
-      <ThemedView
-        type="backgroundElement"
-        style={{ borderTopWidth: 1, borderTopColor: "#c4c4d1", paddingTop: 16 }}
-      >
+      <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
         <Button
           onPress={() => router.navigate("/fun/account")}
           title="View Account Details"

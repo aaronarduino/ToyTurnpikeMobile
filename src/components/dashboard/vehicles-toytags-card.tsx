@@ -9,10 +9,17 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { WebBadge } from "@/components/web-badge";
 import { useSession } from "@/ctx";
-import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
+import {
+  BottomTabInset,
+  MaxContentWidth,
+  Spacing,
+  Styles,
+} from "@/constants/theme";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import { formatter } from "@/constants/currency";
+import { Car } from "lucide-react-native";
+import { router } from "expo-router";
 
 export default function VehiclesToytagsCard() {
   const [data, setData] = useState({
@@ -63,25 +70,31 @@ export default function VehiclesToytagsCard() {
   }
 
   return (
-    <ThemedView type="backgroundElement" style={styles.stepContainer}>
-      <HintRow
-        title="Vehicles"
-        hint={<ThemedText type="code">{data.vehicles}</ThemedText>}
-      />
-      <HintRow
-        title="TOYTAGS"
-        hint={<ThemedText type="code">{data.toytags}</ThemedText>}
-      />
+    <ThemedView type="backgroundElement" style={Styles.card}>
+      <ThemedView type="backgroundElement" style={Styles.cardTopHeader}>
+        <ThemedText type="smallTitle" style={Styles.cardTopHeaderText}>
+          <Car size={16} />
+          &nbsp; Vehicles & TOYTAGs
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView type="backgroundElement" style={Styles.cardContent}>
+        <HintRow
+          title="Vehicles"
+          hint={<ThemedText type="code">{data.vehicles}</ThemedText>}
+        />
+        <HintRow
+          title="TOYTAGs"
+          hint={<ThemedText type="code">{data.toytags}</ThemedText>}
+        />
+      </ThemedView>
+
+      <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
+        <Button
+          onPress={() => router.navigate("/fun/explore")}
+          title="View All Vehicles & TOYTAGs"
+        />
+      </ThemedView>
     </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: "stretch",
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});

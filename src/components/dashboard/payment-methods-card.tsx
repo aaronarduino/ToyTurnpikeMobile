@@ -9,10 +9,17 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { WebBadge } from "@/components/web-badge";
 import { useSession } from "@/ctx";
-import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
+import {
+  BottomTabInset,
+  MaxContentWidth,
+  Spacing,
+  Styles,
+} from "@/constants/theme";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import { formatter } from "@/constants/currency";
+import { CreditCard } from "lucide-react-native";
+import { router } from "expo-router";
 
 export default function PaymentMethodsCard() {
   const [data, setData] = useState({
@@ -65,29 +72,35 @@ export default function PaymentMethodsCard() {
   }
 
   return (
-    <ThemedView type="backgroundElement" style={styles.stepContainer}>
-      <HintRow
-        title="Primary"
-        hint={
-          <ThemedText type="code">****{data.primary.card_number}</ThemedText>
-        }
-      />
-      <HintRow
-        title="Expiration Date"
-        hint={
-          <ThemedText type="code">{data.primary.expiration_date}</ThemedText>
-        }
-      />
+    <ThemedView type="backgroundElement" style={Styles.card}>
+      <ThemedView type="backgroundElement" style={Styles.cardTopHeader}>
+        <ThemedText type="smallTitle" style={Styles.cardTopHeaderText}>
+          <CreditCard size={16} />
+          &nbsp; Auto-Pay Methods
+        </ThemedText>
+      </ThemedView>
+
+      <ThemedView type="backgroundElement" style={Styles.cardContent}>
+        <HintRow
+          title="Primary"
+          hint={
+            <ThemedText type="code">****{data.primary.card_number}</ThemedText>
+          }
+        />
+        <HintRow
+          title="Expiration Date"
+          hint={
+            <ThemedText type="code">{data.primary.expiration_date}</ThemedText>
+          }
+        />
+      </ThemedView>
+
+      <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
+        <Button
+          onPress={() => router.navigate("/fun/payments")}
+          title="Update Auto-Pay Methods"
+        />
+      </ThemedView>
     </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: "stretch",
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
-});
