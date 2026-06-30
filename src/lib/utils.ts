@@ -1,4 +1,7 @@
 export function lastEightOf(item: string): string {
+  if (item == undefined) {
+    return item;
+  }
   // guard against items of less than 8 chars
   if (item.length < 8) {
     return item;
