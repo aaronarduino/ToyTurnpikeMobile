@@ -16,7 +16,7 @@ export default function AppTabs() {
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>Dashboard</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
-          src={require("@/assets/images/tabIcons/home.png")}
+          src={require("@/assets/images/tabIcons/home-rounded.png")}
           renderingMode="template"
         />
       </NativeTabs.Trigger>
@@ -24,7 +24,7 @@ export default function AppTabs() {
       <NativeTabs.Trigger name="vehicles">
         <NativeTabs.Trigger.Label>Vehicles</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
-          src={require("@/assets/images/tabIcons/explore.png")}
+          src={require("@/assets/images/tabIcons/car-tag-rounded.png")}
           renderingMode="template"
         />
       </NativeTabs.Trigger>
@@ -32,7 +32,7 @@ export default function AppTabs() {
       <NativeTabs.Trigger name="payments">
         <NativeTabs.Trigger.Label>Payments</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
-          src={require("@/assets/images/tabIcons/explore.png")}
+          src={require("@/assets/images/tabIcons/cards-stack-rounded.png")}
           renderingMode="template"
         />
       </NativeTabs.Trigger>
@@ -40,7 +40,7 @@ export default function AppTabs() {
       <NativeTabs.Trigger name="account">
         <NativeTabs.Trigger.Label>Account</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon
-          src={require("@/assets/images/tabIcons/explore.png")}
+          src={require("@/assets/images/tabIcons/manage-accounts-rounded.png")}
           renderingMode="template"
         />
       </NativeTabs.Trigger>
