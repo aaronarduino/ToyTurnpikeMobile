@@ -49,7 +49,7 @@ export default function PaymentsCard() {
 
         const dataResult = await response.json();
         setData(dataResult); // Store data in state
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message); // Store error in state
       } finally {
         setLoading(false); // Turn off loading spinner

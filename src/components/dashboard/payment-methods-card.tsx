@@ -97,8 +97,8 @@ export default function PaymentMethodsCard() {
 
       <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
         <Button
-          onPress={() => router.navigate("/fun/payments")}
-          title="Update Auto-Pay Methods"
+          onPress={() => router.navigate("/main/payments")}
+          title="View Auto-Pay Methods"
         />
       </ThemedView>
     </ThemedView>

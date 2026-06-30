@@ -30,7 +30,7 @@ export default function AccountCard() {
 
       <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
         <Button
-          onPress={() => router.navigate("/fun/account")}
+          onPress={() => router.navigate("/main/account")}
           title="View Account Details"
         />
       </ThemedView>

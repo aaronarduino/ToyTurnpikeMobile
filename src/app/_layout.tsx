@@ -24,11 +24,11 @@ function RootNavigator() {
       }}
     >
       <Stack.Protected guard={!!session}>
-        <Stack.Screen name="fun" />
+        <Stack.Screen name="main" />
       </Stack.Protected>
 
       <Stack.Protected guard={!session}>
-        <Stack.Screen name="sign-in" />
+        <Stack.Screen name="index" />
       </Stack.Protected>
     </Stack>
   );

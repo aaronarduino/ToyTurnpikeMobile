@@ -27,30 +27,13 @@ import { useTheme } from "@/hooks/use-theme";
 import { formatter } from "@/constants/currency";
 import { Car, Tags } from "lucide-react-native";
 import { router } from "expo-router";
+import { IToytag, IToytags } from "@/interfaces/api-interfaces";
 
 export default function ToytagCard() {
-  const [data, setData] = useState({
-    vehicles: 0,
-    toytags: 0,
-  });
+  const [data, setData] = useState<IToytags | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const theme = useTheme();
-
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
 
   // 2. Use useEffect to run code on component load
   useEffect(() => {
@@ -63,7 +46,7 @@ export default function ToytagCard() {
 
       try {
         const response = await fetch(
-          `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/dashboard/vehicles_toytags`,
+          `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/vehicles/toytags`,
           {
             headers,
             // 'include' can interfere with the cookies we just set manually in the headers
@@ -101,10 +84,14 @@ export default function ToytagCard() {
       </ThemedView>
 
       <ThemedView type="backgroundElement" style={Styles.cardContent}>
-        {DATA.map((item) => {
+        {data?.toytags.map((item: IToytag) => {
           return (
-            <ThemedText key={item.id} type="small">
-              {item.title}
+            <ThemedText key={item._id} type="small">
+              {item.toytag_number + "\n"}
+              Vehicle:{" "}
+              {item.vehicles.length > 0
+                ? item.vehicles[0].state + "-" + item.vehicles[0].plate_number
+                : ""}
             </ThemedText>
           );
         })}

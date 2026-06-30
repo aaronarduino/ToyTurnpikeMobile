@@ -26,6 +26,10 @@ export default function UpdateAccountCard() {
           title="Account Holder"
           hint={<ThemedText type="code">{session?.user.name}</ThemedText>}
         />
+        <HintRow
+          title="Account Email"
+          hint={<ThemedText type="code">{session?.user.email}</ThemedText>}
+        />
       </ThemedView>
     </ThemedView>
   );

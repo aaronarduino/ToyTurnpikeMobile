@@ -91,7 +91,7 @@ export default function VehiclesToytagsCard() {
 
       <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
         <Button
-          onPress={() => router.navigate("/fun/explore")}
+          onPress={() => router.navigate("/main/vehicles")}
           title="View All Vehicles & TOYTAGs"
         />
       </ThemedView>
