@@ -1,7 +1,10 @@
 import * as Device from "expo-device";
 import { authClient } from "@/lib/auth-client";
 import { Button, Platform, ScrollView, StyleSheet, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import { AnimatedIcon } from "@/components/animated-icon";
 import { HintRow } from "@/components/hint-row";
@@ -9,9 +12,15 @@ import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { WebBadge } from "@/components/web-badge";
 import { useSession } from "@/ctx";
-import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
+import {
+  BottomTabInset,
+  MaxContentWidth,
+  Spacing,
+  Styles,
+} from "@/constants/theme";
 import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
+import UpdateAccountCard from "@/components/account/update-account-card";
 
 function getDevMenuHint() {
   if (Platform.OS === "web") {
@@ -33,6 +42,11 @@ function getDevMenuHint() {
 }
 
 export default function Account() {
+  const safeAreaInsets = useSafeAreaInsets();
+  const insets = {
+    ...safeAreaInsets,
+    bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
+  };
   const [user, setUser] = useState({ account: { holder: "", id: -1 } });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -61,7 +75,7 @@ export default function Account() {
 
         const data = await response.json();
         setUser(data); // Store data in state
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message); // Store error in state
       } finally {
         setLoading(false); // Turn off loading spinner
@@ -73,56 +87,19 @@ export default function Account() {
 
   return (
     <ScrollView
-    // style={[styles.scrollView, { backgroundColor: theme.background }]}
-    // contentInset={insets
-    // contentContainerStyle={[styles.contentContainer]}
+      style={[Styles.scrollView, { backgroundColor: theme.background }]}
+      contentInset={insets}
+      contentContainerStyle={[Styles.contentContainer]}
     >
-      <ThemedView style={styles.container}>
-        <SafeAreaView style={styles.safeArea}>
-          <ThemedView style={styles.heroSection}>
-            <ThemedText type="title" style={styles.title}>
+      <ThemedView style={Styles.container}>
+        <SafeAreaView style={Styles.safeArea}>
+          <ThemedView style={Styles.heroSection}>
+            <ThemedText type="subtitle" style={styles.title}>
               Account
             </ThemedText>
           </ThemedView>
 
-          <ThemedView type="backgroundElement" style={styles.stepContainer}>
-            <HintRow
-              title="Welcome:"
-              hint={<ThemedText type="code">{user.account.holder}</ThemedText>}
-            />
-            <HintRow
-              title="Account ID:"
-              hint={<ThemedText type="code">{user.account.id}</ThemedText>}
-            />
-            <HintRow
-              title="Try editing"
-              hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-            />
-            <HintRow title="Dev tools" hint={getDevMenuHint()} />
-            <HintRow
-              title="Fresh start"
-              hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-            />
-          </ThemedView>
-          <ThemedView type="backgroundElement" style={styles.stepContainer}>
-            <HintRow
-              title="Welcome:"
-              hint={<ThemedText type="code">{user.account.holder}</ThemedText>}
-            />
-            <HintRow
-              title="Account ID:"
-              hint={<ThemedText type="code">{user.account.id}</ThemedText>}
-            />
-            <HintRow
-              title="Try editing"
-              hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-            />
-            <HintRow title="Dev tools" hint={getDevMenuHint()} />
-            <HintRow
-              title="Fresh start"
-              hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-            />
-          </ThemedView>
+          <UpdateAccountCard />
 
           <Button
             onPress={() => {

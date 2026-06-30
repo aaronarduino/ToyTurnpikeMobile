@@ -68,7 +68,7 @@ export default function HomeScreen() {
 
         const data = await response.json();
         setUser(data); // Store data in state
-      } catch (err) {
+      } catch (err: any) {
         setError(err.message); // Store error in state
       } finally {
         setLoading(false); // Turn off loading spinner
