@@ -6,6 +6,7 @@
 import "@/global.css";
 
 import { Platform, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export const Colors = {
   light: {
@@ -64,6 +65,38 @@ export const Spacing = {
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
 
+export const ContentPlatformStyle = (insets: {
+  bottom: number;
+  top: number;
+  right: number;
+  left: number;
+}) => {
+  return Platform.select({
+    android: {
+      paddingTop: insets.top,
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
+      paddingBottom: insets.bottom,
+    },
+    web: {
+      paddingTop: Spacing.six,
+      paddingBottom: Spacing.four,
+    },
+  });
+};
+// export const ContentPlatformStyle = Platform.select({
+//   android: {
+//     paddingTop: insets.top,
+//     paddingLeft: insets.left,
+//     paddingRight: insets.right,
+//     paddingBottom: insets.bottom,
+//   },
+//   web: {
+//     paddingTop: Spacing.six,
+//     paddingBottom: Spacing.four,
+//   },
+// });
+
 export const Styles = StyleSheet.create({
   card: {
     gap: Spacing.three,
@@ -95,5 +128,47 @@ export const Styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.four,
     borderRadius: Spacing.four,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  mainContent: {
+    flex: 1,
+    // paddingHorizontal: Spacing.four,
+    gap: Spacing.three,
+    // paddingBottom: BottomTabInset + Spacing.three,
+    maxWidth: MaxContentWidth,
+  },
+  contentContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  container: {
+    maxWidth: MaxContentWidth,
+    flexGrow: 1,
+  },
+  heroSection: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    paddingHorizontal: Spacing.four,
+    gap: Spacing.four,
+  },
+  title: {
+    textAlign: "center",
+  },
+  titleContainer: {
+    gap: Spacing.three,
+    alignItems: "center",
+    paddingHorizontal: Spacing.four,
+    paddingVertical: Spacing.six,
+  },
+  safeArea: {
+    flex: 1,
+    paddingHorizontal: Spacing.four,
+    alignItems: "center",
+    gap: Spacing.three,
+    paddingBottom: BottomTabInset + Spacing.three,
+    maxWidth: MaxContentWidth,
   },
 });
