@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TextInput, Button } from "react-native";
+import { View, TextInput, Button, Alert } from "react-native";
 import { authClient } from "@/lib/auth-client";
 import { router } from "expo-router";
 import { useSession } from "@/ctx";
@@ -11,11 +11,12 @@ export default function Index() {
 
   const handleLogin = async () => {
     const authResult = await signIn(email, password);
-    // TODO: Finish handling login here.
-    // console.log(`error: ${authResult.error?.message}`);
-    // console.log(`data: ${JSON.stringify(authResult.data)}`);
-    if (authResult === true) {
+    if (authResult.success === true) {
       router.replace("/fun");
+    } else {
+      // TODO: This is not a good way of displaying an auth error to the user.
+      //       Find another way to handle this.
+      //Alert.alert("Error", authResult.error?.message);
     }
   };
   return (

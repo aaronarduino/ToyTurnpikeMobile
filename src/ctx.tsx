@@ -2,9 +2,10 @@ import { use, createContext, type PropsWithChildren } from "react";
 import { authClient } from "@/lib/auth-client";
 
 import { useStorageState } from "./useStorageState";
+import { IAuthResult } from "./interfaces/auth-interfaces";
 
 const AuthContext = createContext<{
-  signIn: (email: string, password: string) => Promise<boolean>;
+  signIn: (email: string, password: string) => Promise<IAuthResult>;
   signOut: () => Promise<boolean>;
   session?: {} | null;
   isLoading: boolean;
@@ -33,9 +34,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
           });
           if (authResult.data) {
             setSession(authResult.data.token);
-            return true;
+            return { success: true, error: authResult.error };
           }
-          return false;
+          return { success: false, error: null };
         },
         signOut: async () => {
           const authResult = await authClient.signOut();
