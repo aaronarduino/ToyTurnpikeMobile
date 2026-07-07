@@ -12,7 +12,22 @@ export default function PaymentsCard() {
   const theme = useTheme();
 
   if (error) {
-    return <ThemedText type="code">{error}</ThemedText>;
+    return (
+      <ThemedView type="backgroundElement" style={styles.stepContainer}>
+        <HintRow
+          title="Statement Balance"
+          hint={<ThemedText type="code"></ThemedText>}
+        />
+        <HintRow
+          title="Auto pay on"
+          hint={<ThemedText type="code"></ThemedText>}
+        />
+        <HintRow
+          title="Current Account Balance"
+          hint={<ThemedText type="code"></ThemedText>}
+        />
+      </ThemedView>
+    );
   }
 
   return (

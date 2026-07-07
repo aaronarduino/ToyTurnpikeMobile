@@ -10,13 +10,6 @@ import { router } from "expo-router";
 import { useDashboardPaymentMethods } from "@/hooks/use-dashboard";
 
 export default function PaymentMethodsCard() {
-  const { data, isLoading, error } = useDashboardPaymentMethods();
-  const theme = useTheme();
-
-  if (error) {
-    return <ThemedText type="code">{error}</ThemedText>;
-  }
-
   return (
     <ThemedView type="backgroundElement" style={Styles.card}>
       <ThemedView type="backgroundElement" style={Styles.cardTopHeader}>
@@ -26,20 +19,7 @@ export default function PaymentMethodsCard() {
         </ThemedText>
       </ThemedView>
 
-      <ThemedView type="backgroundElement" style={Styles.cardContent}>
-        <HintRow
-          title="Primary"
-          hint={
-            <ThemedText type="code">****{data.primary.card_number}</ThemedText>
-          }
-        />
-        <HintRow
-          title="Expiration Date"
-          hint={
-            <ThemedText type="code">{data.primary.expiration_date}</ThemedText>
-          }
-        />
-      </ThemedView>
+      <PaymentMethodsCardContent />
 
       <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
         <Button
@@ -47,6 +27,35 @@ export default function PaymentMethodsCard() {
           title="View Auto-Pay Methods"
         />
       </ThemedView>
+    </ThemedView>
+  );
+}
+
+export function PaymentMethodsCardContent() {
+  const { data, isLoading, error } = useDashboardPaymentMethods();
+
+  if (error) {
+    return (
+      <ThemedView type="backgroundElement" style={Styles.cardContent}>
+        <HintRow title="No primary payment method added." hint={null} />
+      </ThemedView>
+    );
+  }
+
+  return (
+    <ThemedView type="backgroundElement" style={Styles.cardContent}>
+      <HintRow
+        title="Primary"
+        hint={
+          <ThemedText type="code">****{data.primary.card_number}</ThemedText>
+        }
+      />
+      <HintRow
+        title="Expiration Date"
+        hint={
+          <ThemedText type="code">{data.primary.expiration_date}</ThemedText>
+        }
+      />
     </ThemedView>
   );
 }
