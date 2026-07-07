@@ -6,6 +6,7 @@ import { IAuthResult } from "./interfaces/auth-interfaces";
 
 const AuthContext = createContext<{
   signIn: (email: string, password: string) => Promise<IAuthResult>;
+  signUp: (email: string, password: string, name: string) => Promise<IAuthResult>;
   signOut: () => Promise<boolean>;
   session?: {} | null;
   isLoading: boolean;
@@ -27,16 +28,27 @@ export function SessionProvider({ children }: PropsWithChildren) {
     <AuthContext.Provider
       value={{
         signIn: async (email: string, password: string) => {
-          // sign in logic here
           const authResult = await authClient.signIn.email({
             email,
             password,
           });
           if (authResult.data) {
             setSession(authResult.data.token);
-            return { success: true, error: authResult.error };
+            return { success: true, error: null };
           }
-          return { success: false, error: null };
+          return { success: false, error: authResult.error };
+        },
+        signUp: async (email: string, password: string, name: string) => {
+          const authResult = await authClient.signUp.email({
+            email,
+            password,
+            name,
+          });
+          if (authResult.data) {
+            setSession(authResult.data.token);
+            return { success: true, error: null };
+          }
+          return { success: false, error: authResult.error };
         },
         signOut: async () => {
           const authResult = await authClient.signOut();
