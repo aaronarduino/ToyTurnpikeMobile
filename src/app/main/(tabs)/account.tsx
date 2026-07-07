@@ -66,11 +66,9 @@ export default function Account() {
 
           <Button
             onPress={() => {
-              // The guard in `RootNavigator` redirects back to the sign-in screen.
               signOut();
             }}
             title="Sign Out"
-            // color="#841584"
             accessibilityLabel="Button to sign out of app."
           />
 

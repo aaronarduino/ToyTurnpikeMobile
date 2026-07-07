@@ -1,12 +1,13 @@
-import { StyleSheet } from "react-native";
+import { Button } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Spacing, Styles } from "@/constants/theme";
-import { useTheme } from "@/hooks/use-theme";
+import { Styles } from "@/constants/theme";
 import { Car } from "lucide-react-native";
 import { IVehicle } from "@/interfaces/api-interfaces";
 import { useVehicles } from "@/hooks/use-vehicles";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback } from "react";
 
 export default function VehiclesCard() {
   return (
@@ -19,13 +20,25 @@ export default function VehiclesCard() {
       </ThemedView>
 
       <VehiclesCardContent />
+
+      <ThemedView type="backgroundElement" style={Styles.cardBottomHeader}>
+        <Button
+          onPress={() => router.navigate("/main/add-vehicle")}
+          title="Add Vehicle"
+        />
+      </ThemedView>
     </ThemedView>
   );
 }
 
 export function VehiclesCardContent() {
-  const { data, isLoading, error } = useVehicles();
-  const theme = useTheme();
+  const { data, isLoading, error, refetch } = useVehicles();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
   if (error || data?.vehicles.length === 0) {
     return (

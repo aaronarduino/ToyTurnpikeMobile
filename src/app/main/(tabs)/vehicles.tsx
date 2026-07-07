@@ -46,10 +46,6 @@ export default function Vehicles() {
 
           <VehiclesCard />
           <ToytagCard />
-          {/*<ThemedView style={Styles.mainContent}>
-            <VehiclesCard />
-            <ToytagCard />
-          </ThemedView>*/}
 
           {Platform.OS === "web" && <WebBadge />}
         </SafeAreaView>
