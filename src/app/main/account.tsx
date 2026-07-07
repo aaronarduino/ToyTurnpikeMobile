@@ -1,6 +1,5 @@
 import * as Device from "expo-device";
-import { authClient } from "@/lib/auth-client";
-import { Button, Platform, ScrollView, StyleSheet, Text } from "react-native";
+import { Button, Platform, ScrollView, StyleSheet } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -18,7 +17,6 @@ import {
   Spacing,
   Styles,
 } from "@/constants/theme";
-import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/use-theme";
 import UpdateAccountCard from "@/components/account/update-account-card";
 
@@ -47,43 +45,8 @@ export default function Account() {
     ...safeAreaInsets,
     bottom: safeAreaInsets.bottom + BottomTabInset + Spacing.three,
   };
-  const [user, setUser] = useState({ account: { holder: "", id: -1 } });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { signOut } = useSession();
   const theme = useTheme();
-
-  // 2. Use useEffect to run code on component load
-  useEffect(() => {
-    // Create an async function inside the effect
-    const fetchDashboard = async () => {
-      const cookies = authClient.getCookie();
-      const headers = {
-        Cookie: cookies,
-      };
-
-      try {
-        const response = await fetch("http://localhost:3000/dashboard", {
-          headers,
-          // 'include' can interfere with the cookies we just set manually in the headers
-          credentials: "omit",
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        setUser(data); // Store data in state
-      } catch (err: any) {
-        setError(err.message); // Store error in state
-      } finally {
-        setLoading(false); // Turn off loading spinner
-      }
-    };
-
-    fetchDashboard();
-  }, []);
 
   return (
     <ScrollView

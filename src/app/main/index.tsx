@@ -1,6 +1,6 @@
 import * as Device from "expo-device";
 import { authClient } from "@/lib/auth-client";
-import { Platform, ScrollView, StyleSheet, Text } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AnimatedIcon } from "@/components/animated-icon";
@@ -10,7 +10,6 @@ import { ThemedView } from "@/components/themed-view";
 import { WebBadge } from "@/components/web-badge";
 import { useSession } from "@/ctx";
 import { BottomTabInset, MaxContentWidth, Spacing } from "@/constants/theme";
-import { useEffect, useState } from "react";
 import PaymentsCard from "@/components/dashboard/payments-card";
 import AccountCard from "@/components/dashboard/account-card";
 import PaymentMethodsCard from "@/components/dashboard/payment-methods-card";
@@ -37,46 +36,8 @@ function getDevMenuHint() {
 }
 
 export default function HomeScreen() {
-  const [user, setUser] = useState({ account: { holder: "", id: -1 } });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const { signOut } = useSession();
   const { data: session } = authClient.useSession();
-
-  // 2. Use useEffect to run code on component load
-  useEffect(() => {
-    // Create an async function inside the effect
-    const fetchDashboard = async () => {
-      const cookies = authClient.getCookie();
-      const headers = {
-        Cookie: cookies,
-      };
-
-      try {
-        const response = await fetch(
-          `${process.env.EXPO_PUBLIC_BACKEND_API_URL}/dashboard`,
-          {
-            headers,
-            // 'include' can interfere with the cookies we just set manually in the headers
-            credentials: "omit",
-          },
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        setUser(data); // Store data in state
-      } catch (err: any) {
-        setError(err.message); // Store error in state
-      } finally {
-        setLoading(false); // Turn off loading spinner
-      }
-    };
-
-    fetchDashboard();
-  }, []);
 
   return (
     <ThemedView style={styles.container}>
